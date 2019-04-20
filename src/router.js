@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Deck from "./views/Deck.vue";
-import Edit from "./views/Edit.vue";
-import Review from "./views/Review.vue";
+import Deck from "@/components/Deck.vue";
+import Edit from "@/components/Edit.vue";
+import Review from "@/components/Review.vue";
 
 Vue.use(Router);
 

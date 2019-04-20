@@ -1,17 +1,32 @@
 <template>
   <div>
-    <h2>DeckItem</h2>
-    <p>deck id: {{ deckid }}</p>
-    <p><router-link :to="{name: 'edit', params: {deckid}}">edit</router-link></p>
-    <p><router-link :to="{name: 'review', params: {deckid}}">review</router-link></p>
+    <h2>{{ name }}</h2>
+    <p>{{ desc }}</p>
+    <button @click="$router.push({name: 'review', params: {deckid}})" type="button">Review</button>
+    <button @click="$router.push({name: 'edit', params: {deckid}})" type="button">Edit</button>
+    <button @click="deleteDeck">Delete</button>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: "DeckItem",
-  props: {
-    deckid: Number,
+  props: ['name', 'desc', 'deckid'],
+  data: function() {
+    return {
+    }
+  },
+  methods: {
+    async deleteDeck() {
+      try {
+        const res = await axios.delete(`http://localhost:5000/api/decks/${this.deckid}`)
+        this.$emit('deleteDeck', this.deckid)
+      } catch(err) {
+        console.log(err);
+      }
+    }
   }
 };
 </script>
