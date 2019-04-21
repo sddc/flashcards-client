@@ -1,19 +1,22 @@
 <template>
-  <div>
-    <h2>Add Deck</h2>
+  <div class="mt-3 mb-5">
+
+
     <form @submit.prevent="addDeck">
-      <div>
-        <input v-model="name" placeholder="Name">
+
+      <div class="input-group mb-3" v-if="showAddDeckForm">
+        <input v-model="name" type="text" class="form-control" placeholder="Name" required>
+        <input v-model="desc" type="text" class="form-control" placeholder="Description" required>
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="submit">Add</button>
+        </div>
+      </div>
+      <div v-else>
+        <button @click="showAddDeckForm = true" class="btn btn-primary" type="button">Add Deck</button>
       </div>
 
-      <div>
-        <input v-model="desc" placeholder="Description">
-      </div>
-
-      <div>
-        <button type="submit">Add</button>
-      </div>
     </form>
+
   </div>
 </template>
 
@@ -26,6 +29,7 @@ export default {
     return {
       name: '',
       desc: '',
+      showAddDeckForm: false
     }
   },
   methods: {
@@ -39,6 +43,7 @@ export default {
         this.$emit('addDeck', res.data)
         this.name = '';
         this.desc = '';
+        this.showAddDeckForm = false;
       } catch(err) {
         console.log(err);
       }

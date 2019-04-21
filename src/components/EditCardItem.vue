@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <input v-model="cardFront" placeholder="Front" v-bind:class="{ redborder: frontEmpty }">
-    <input v-model="cardBack" placeholder="Back" v-bind:class="{ redborder: backEmpty }">
-    <button type="button" @click="deleteCard">x</button>
-  </div>
+    <tr>
+      <td><input class="form-control" v-model="cardFront" placeholder="Front" v-bind:class="{ redborder: frontEmpty }"></td>
+      <td><input class="form-control" v-model="cardBack" placeholder="Back" v-bind:class="{ redborder: backEmpty }"></td>
+      <td><button type="button" class="btn btn-danger" @click="deleteCard">Delete</button></td>
+    </tr>
 </template>
 
 <script>
