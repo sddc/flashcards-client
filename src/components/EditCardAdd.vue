@@ -40,7 +40,7 @@ export default {
   methods: {
     async addCard() {
       try {
-        const res = await axios.post(`http://localhost:5000/api/cards/${this.deckid}`, {
+        const res = await axios.post(process.env.VUE_APP_API + `api/cards/${this.deckid}`, {
           front: this.front,
           back: this.back
         })

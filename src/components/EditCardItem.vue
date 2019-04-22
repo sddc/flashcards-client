@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     deleteCard() {
-      axios.delete(`http://localhost:5000/api/cards/${this.cardid}`)
+      axios.delete(process.env.VUE_APP_API + `api/cards/${this.cardid}`)
       .then(() => {
         this.$emit('deleteCard', this.cardid)
       })
@@ -52,7 +52,7 @@ export default {
     editCard:
       _.debounce(function() {
         if(this.cardFront.length > 0 && this.cardBack.length > 0) {
-        axios.put(`http://localhost:5000/api/cards/${this.cardid}`,{
+        axios.put(process.env.VUE_APP_API + `api/cards/${this.cardid}`,{
           front: this.cardFront,
           back: this.cardBack
         })

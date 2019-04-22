@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     async fetchCards() {
-      const res = await axios.get(`http://localhost:5000/api/cards/${this.deckid}`);
+      const res = await axios.get(process.env.VUE_APP_API + `api/cards/${this.deckid}`);
       this.cards = res.data;
     },
     start() {
@@ -87,6 +87,7 @@ export default {
   mounted() {
     this.fetchCards().catch((err) => {
       console.log(err);
+      return this.$router.push('/404');
     });
   }
 };

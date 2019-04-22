@@ -43,7 +43,7 @@ export default {
   methods: {
     async deleteDeck() {
       try {
-        const res = await axios.delete(`http://localhost:5000/api/decks/${this.deckid}`)
+        const res = await axios.delete(process.env.VUE_APP_API + `api/decks/${this.deckid}`)
         this.$emit('deleteDeck', this.deckid)
       } catch(err) {
         console.log(err);

@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     async fetchDecks() {
-      const res = await axios.get('http://localhost:5000/api/decks');
+      const res = await axios.get(process.env.VUE_APP_API + 'api/decks');
       this.decks = res.data;
     },
     deleteDeck(id) {
