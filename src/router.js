@@ -3,6 +3,7 @@ import Router from "vue-router";
 import Deck from "@/components/Deck.vue";
 import Edit from "@/components/Edit.vue";
 import Review from "@/components/Review.vue";
+import NotFound from "@/components/NotFound.vue";
 
 Vue.use(Router);
 
@@ -25,5 +26,13 @@ export default new Router({
       component: Review,
       props: true
     },
+    {
+      path: "/404",
+      component: NotFound
+    },
+    {
+      path: "*",
+      redirect: "/404"
+    }
   ]
 });
