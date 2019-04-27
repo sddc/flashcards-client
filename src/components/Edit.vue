@@ -3,13 +3,14 @@
     <Header></Header>
 
     <div class="container">
-      <div class="row">
+
+      <div class="row" v-show="fetchOk">
         <div class="col">
-          <h1 class="mt-3 mb-3">Edit Deck <small class="text-muted">{{ cards.length + " card" + ( cards.length === 1 ? '' : 's') }}</small></h1>
+          <h1 class="mt-3 mb-3">Edit Deck <small class="text-muted">{{ numCards }}</small></h1>
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" v-show="fetchOk">
         <div class="col">
 
           <table class="table">
@@ -39,11 +40,20 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row" v-show="fetchOk">
         <div class="col">
           <EditCardAdd v-bind:deckid="deckid" v-on:addCard="addCard($event)"></EditCardAdd>
         </div>
       </div>
+
+      <div class="row" v-show="!fetchOk">
+        <div class="col text-center">
+          <div class="spinner-border mt-3">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -67,9 +77,15 @@ export default {
       required: true
     }
   },
+  computed: {
+    numCards() {
+      return this.cards.length + " card" + ( this.cards.length === 1 ? '' : 's');
+    }
+  },
   data() {
     return {
       cards: [],
+      fetchOk: false,
       deck: {}
     }
   },
@@ -77,6 +93,7 @@ export default {
     async fetchCards() {
       const res = await axios.get(process.env.VUE_APP_API + `api/cards/${this.deckid}`);
       this.cards = res.data;
+      this.fetchOk = true;
     },
     deleteCard(id) {
       this.cards = this.cards.filter(card => card.id != id)

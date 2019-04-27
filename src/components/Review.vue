@@ -3,13 +3,13 @@
 
     <Header></Header>
 
-    <div class="container mt-3">
+    <div class="container mt-3" v-show="fetchOk">
 
       <div class="row" v-if="show === 'start'">
         <div class="col">
           <div class="jumbotron">
             <h1 class="display-4">Review</h1>
-            <p class="lead">{{ cards.length + " card" + ( cards.length === 1 ? '' : 's') }} due to review.</p>
+            <p class="lead">{{ numCards }} due to review.</p>
             <button @click="start" v-if="cards.length > 0" class="btn btn-primary btn-lg">Start</button>
             <button @click="$router.push('/')" v-else class="btn btn-primary btn-lg">Back to Decks</button>
           </div>
@@ -19,7 +19,7 @@
       <div class="row" v-else-if="show === 'card'">
         <div class="col">
           <div class="jumbotron">
-            <p class="lead">{{ cards.length + " card" + ( cards.length === 1 ? '' : 's') }} remaining</p>
+            <p class="lead">{{ numCards }} remaining</p>
 
             <ReviewCardItem
             v-bind:front="currentCard.front"
@@ -36,6 +36,17 @@
           <div class="jumbotron">
             <h1 class="display-4">Review Finish</h1>
             <button @click="$router.push('/')" class="btn btn-primary btn-lg">Back to Decks</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="container" v-show="!fetchOk">
+      <div class="row">
+        <div class="col text-center">
+          <div class="spinner-border mt-3">
+            <span class="sr-only">Loading...</span>
           </div>
         </div>
       </div>
@@ -65,8 +76,14 @@ export default {
   data() {
     return {
       cards: [],
+      fetchOk: false,
       show: 'start',
       currentCard: {front: '', back: ''}
+    }
+  },
+  computed: {
+    numCards() {
+      return this.cards.length + " card" + ( this.cards.length === 1 ? '' : 's');
     }
   },
   methods: {
@@ -132,9 +149,9 @@ export default {
     async fetchCards() {
       const res = await axios.get(process.env.VUE_APP_API + `api/cards/${this.deckid}`);
       const today = new Date().setHours(0, 0, 0, 0);
-      this.cards = res.data;
       this.cards = res.data.filter(card => new Date(card.next_review) <= today);
       this.cards.forEach(card => card.updated = false);
+      this.fetchOk = true;
     },
     start() {
       this.currentCard = this.cards.shift();
