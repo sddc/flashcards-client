@@ -4,10 +4,23 @@
       <h1 class="display-4">{{ front }}</h1>
       <hr>
       <transition name="bounce">
-      <h1 class="display-4" v-show="showBack">{{ back }}</h1>
+      <h1 class="display-4" v-if="showBack">{{ back }}</h1>
     </transition>
     </div>
-    <button @click="flipCard" v-show="flipCardButton" class="btn btn-primary btn-lg">Flip</button>
+    <button @click="flipCard" v-if="flipCardButton" class="btn btn-primary btn-lg btn-block">Show</button>
+
+    <div class="text-center" v-else>
+      <p class="lead">Rate Card Difficulty</p>
+      <div class="btn-group btn-group-lg text-center" role="group">
+        <button @click="nextCard(0)" type="button" class="btn btn-danger">0</button>
+        <button @click="nextCard(1)" type="button" class="btn btn-danger">1</button>
+        <button @click="nextCard(2)" type="button" class="btn btn-warning">2</button>
+        <button @click="nextCard(3)" type="button" class="btn btn-warning">3</button>
+        <button @click="nextCard(4)" type="button" class="btn btn-success">4</button>
+        <button @click="nextCard(5)" type="button" class="btn btn-success">5</button>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -25,23 +38,25 @@ export default {
     flipCard() {
       this.showBack = true;
       this.flipCardButton = false;
-      this.$emit('nextCard');
+    },
+    nextCard(rating) {
+      this.showBack = false;
+      this.flipCardButton = true;
+      this.$emit('nextCard', rating);
     }
   }
 }
 </script>
 
 <style lang="css" scoped>
-  #cardbox {
-    height: 200px;
-  }
+#cardbox {
+  height: 200px;
+}
 
-  .bounce-enter-active {
+.bounce-enter-active {
   animation: bounce-in .5s;
 }
-.bounce-leave-active {
-  animation: bounce-in .5s reverse;
-}
+
 @keyframes bounce-in {
   0% {
     transform: scale(0);
