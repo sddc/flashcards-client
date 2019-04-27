@@ -1,34 +1,7 @@
 # flashcards-client
+[https://distracted-curran-76db9e.netlify.com](https://distracted-curran-76db9e.netlify.com)
 
-## Project setup
-```
-npm install
-```
+Flashcards web app frontend built with Vue.js, and Bootstrap. Implements the [SuperMemo SM-2](https://www.supermemo.com/en/archives1990-2015/english/ol/sm2) Spaced Repetition algorithm.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Run your unit tests
-```
-npm run test:unit
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Backend
+[https://github.com/sddc/flashcards-server](https://github.com/sddc/flashcards-server)
