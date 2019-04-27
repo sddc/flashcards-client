@@ -57,8 +57,10 @@ export default {
     Header
   },
   props: {
-    deckid: Number,
-    required: true
+    deckid: {
+      type: Number,
+      required: true
+    }
   },
   data() {
     return {
@@ -101,7 +103,7 @@ export default {
         this.currentCard.next_review = nextReview.toISOString();
 
         try {
-          const res = await axios.put(process.env.VUE_APP_API + `api/cards/${this.currentCard.id}`,{
+          await axios.put(process.env.VUE_APP_API + `api/cards/${this.currentCard.id}`,{
             easiness: this.currentCard.easiness,
             repetitions: this.currentCard.repetitions,
             interval: this.currentCard.interval,

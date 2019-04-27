@@ -27,7 +27,16 @@
 <script>
 export default {
   name: "ReviewCardItem",
-  props: ['front', 'back'],
+  props: {
+    front: {
+      type: String,
+      required: true
+    },
+    back: {
+      type: String,
+      required: true
+    }
+  },
   data() {
     return {
       showBack: false,

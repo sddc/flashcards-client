@@ -34,7 +34,20 @@ import axios from 'axios'
 
 export default {
   name: "DeckItem",
-  props: ['name', 'desc', 'deckid'],
+  props: {
+    name: {
+      type: String,
+      required: true
+    },
+    desc: {
+      type: String,
+      required: true
+    },
+    deckid: {
+      type: Number,
+      required: true
+    },
+  },
   data: function() {
     return {
       showConfirmDelete: false

@@ -29,7 +29,12 @@ import axios from 'axios'
 
 export default {
   name: "EditCardAdd",
-  props: ['deckid'],
+  props: {
+    deckid: {
+      type: Number,
+      required: true
+    }
+  },
   data: function() {
     return {
       front: '',

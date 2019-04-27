@@ -61,7 +61,12 @@ export default {
     EditCardAdd,
     Header
   },
-  props: ['deckid', 'name'],
+  props: {
+    deckid: {
+      type: Number,
+      required: true
+    }
+  },
   data() {
     return {
       cards: [],

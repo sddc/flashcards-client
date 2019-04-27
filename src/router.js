@@ -18,13 +18,13 @@ export default new Router({
       path: "/edit/:deckid",
       name: "edit",
       component: Edit,
-      props: true
+      props: route => { return { deckid: Number(route.params.deckid) } }
     },
     {
       path: "/review/:deckid",
       name: "review",
       component: Review,
-      props: true
+      props: route => { return { deckid: Number(route.params.deckid) } }
     },
     {
       path: "/404",

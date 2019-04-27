@@ -12,7 +12,20 @@ import _ from 'lodash'
 
 export default {
   name: "EditCardItem",
-  props: ['cardid', 'front', 'back'],
+  props: {
+    cardid: {
+      type: Number,
+      required: true
+    },
+    front: {
+      type: String,
+      required: true
+    },
+    back: {
+      type: String,
+      required: true
+    }
+  },
   watch: {
     cardFront: function() {
       if(this.cardFront.length > 0) {
