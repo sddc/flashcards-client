@@ -60,6 +60,10 @@
 import Header from "@/components/Header.vue";
 import axios from 'axios'
 import ReviewCardItem from "@/components/ReviewCardItem.vue";
+import _ from 'lodash'
+
+// precalculated from ease factor formula
+const easeModifier = [-0.8, -0.54, -0.32, -0.14, 0, 0.1];
 
 export default {
   name: "Review",
@@ -95,9 +99,6 @@ export default {
       }
 
       if(!this.currentCard.updated) {
-        // precalculated from ease factor formula
-        const easeModifier = [-0.8, -0.54, -0.32, -0.14, 0, 0.1];
-
         this.currentCard.easiness += easeModifier[rating];
         if(this.currentCard.easiness < 1.3) this.currentCard.easiness = 1.3;
 
@@ -134,8 +135,10 @@ export default {
         this.currentCard.updated = true;
       }
 
+      // repeat card until rating is >= 4
       if(rating < 4) {
         this.cards.push(this.currentCard);
+        this.cards = _.shuffle(this.cards);
       }
 
       let nextCard = this.cards.shift();
@@ -149,8 +152,14 @@ export default {
     async fetchCards() {
       const res = await axios.get(process.env.VUE_APP_API + `api/cards/${this.deckid}`);
       const today = new Date();
+
+      // filter cards past review date
       this.cards = res.data.filter(card => new Date(card.next_review) <= today);
+
+      // ensure card is only updated once if rating < 4
       this.cards.forEach(card => card.updated = false);
+
+      this.cards = _.shuffle(this.cards);
       this.fetchOk = true;
     },
     start() {

@@ -4,12 +4,12 @@
       <h1 class="display-4">{{ front }}</h1>
       <hr>
       <transition name="bounce">
-      <h1 class="display-4" v-if="showBack">{{ back }}</h1>
-    </transition>
+        <h1 class="display-4" v-show="showBack">{{ back }}</h1>
+      </transition>
     </div>
-    <button @click="flipCard" v-if="flipCardButton" class="btn btn-primary btn-lg btn-block">Show</button>
+    <button @click="flipCard" v-show="!showBack" class="btn btn-primary btn-lg btn-block">Show</button>
 
-    <div class="text-center" v-else>
+    <div class="text-center" v-show="showBack">
       <p class="lead">Rate Card Difficulty</p>
       <div class="btn-group btn-group-lg text-center" role="group">
         <button @click="nextCard(0)" type="button" class="btn btn-danger">0</button>
@@ -39,18 +39,15 @@ export default {
   },
   data() {
     return {
-      showBack: false,
-      flipCardButton: true
+      showBack: false
     }
   },
   methods: {
     flipCard() {
       this.showBack = true;
-      this.flipCardButton = false;
     },
     nextCard(rating) {
       this.showBack = false;
-      this.flipCardButton = true;
       this.$emit('nextCard', rating);
     }
   }
@@ -64,6 +61,10 @@ export default {
 
 .bounce-enter-active {
   animation: bounce-in .5s;
+}
+
+.bounce-leave {
+  opacity: 0;
 }
 
 @keyframes bounce-in {
