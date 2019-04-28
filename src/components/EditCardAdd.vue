@@ -1,27 +1,15 @@
 <template>
   <div>
-
-
-
-
-      <form @submit.prevent="addCard">
-
-        <div class="input-group mb-3" v-if="showAddCardForm">
-          <input v-model="front" type="text" class="form-control" placeholder="Front" required>
-          <input v-model="back" type="text" class="form-control" placeholder="Back" required>
-          <div class="input-group-append">
-            <button class="btn btn-primary" type="submit">Add</button>
-          </div>
+    <form @submit.prevent="addCard">
+      <div class="input-group mb-3">
+        <input v-model="front" type="text" class="form-control" placeholder="Front" ref="front" required>
+        <input v-model="back" type="text" class="form-control" placeholder="Back" required>
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="submit">Add Card</button>
         </div>
-        <div v-else>
-          <button @click="showAddCardForm = true" class="btn btn-primary" type="button">Add Card</button>
-        </div>
-
-      </form>
-
-    </div>
-
-
+      </div>
+    </form>
+  </div>
 </template>
 
 <script>
@@ -38,8 +26,7 @@ export default {
   data: function() {
     return {
       front: '',
-      back: '',
-      showAddCardForm: false
+      back: ''
     }
   },
   methods: {
@@ -53,7 +40,7 @@ export default {
         this.$emit('addCard', res.data)
         this.front = '';
         this.back = '';
-        this.showAddCardForm = false;
+        this.$refs.front.focus();
       } catch(err) {
         console.log(err);
       }

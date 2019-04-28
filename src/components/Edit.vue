@@ -3,17 +3,29 @@
     <Header></Header>
 
     <div class="container">
+      <div class="row" v-show="fetchOk">
+        <div class="col">
+          <h6 class="mt-3"><router-link :to="{ name: 'deck' }">Back to Decks</router-link></h6>
+          <h1 class="mb-3">Edit Deck <small class="text-muted">{{ numCards }}</small></h1>
+        </div>
+      </div>
 
       <div class="row" v-show="fetchOk">
         <div class="col">
-          <h1 class="mt-3 mb-3">Edit Deck <small class="text-muted">{{ numCards }}</small></h1>
+          <EditCardAdd v-bind:deckid="deckid" v-on:addCard="addCard($event)"></EditCardAdd>
+        </div>
+      </div>
+
+      <div class="row mb-3" v-show="fetchOk">
+        <div class="col">
+          <input type="search" v-model="cardFilter" class="form-control" placeholder="Filter cards by front or back">
         </div>
       </div>
 
       <div class="row" v-show="fetchOk">
         <div class="col">
 
-          <table class="table">
+          <table class="table table-striped">
 
             <thead>
               <tr>
@@ -26,7 +38,7 @@
             <tbody name="fade" is="transition-group">
 
               <EditCardItem
-              v-for="card in cards"
+              v-for="card in filteredCards"
               v-bind:key="card.id"
               v-bind:cardid="card.id"
               v-bind:front="card.front"
@@ -37,12 +49,6 @@
 
 
           </table>
-        </div>
-      </div>
-
-      <div class="row" v-show="fetchOk">
-        <div class="col">
-          <EditCardAdd v-bind:deckid="deckid" v-on:addCard="addCard($event)"></EditCardAdd>
         </div>
       </div>
 
@@ -80,13 +86,18 @@ export default {
   computed: {
     numCards() {
       return this.cards.length + " card" + ( this.cards.length === 1 ? '' : 's');
+    },
+    filteredCards() {
+      return this.cards.filter(card => card.front.toLowerCase().match(this.cardFilter.toLowerCase()) ||
+      card.back.toLowerCase().match(this.cardFilter.toLowerCase()));
     }
   },
   data() {
     return {
       cards: [],
       fetchOk: false,
-      deck: {}
+      deck: {},
+      cardFilter: ''
     }
   },
   methods: {
@@ -99,7 +110,7 @@ export default {
       this.cards = this.cards.filter(card => card.id != id)
     },
     addCard(card) {
-      this.cards.push(card)
+      this.cards.unshift(card)
     }
   },
   mounted() {
