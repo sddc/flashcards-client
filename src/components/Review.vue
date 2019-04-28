@@ -148,7 +148,7 @@ export default {
     },
     async fetchCards() {
       const res = await axios.get(process.env.VUE_APP_API + `api/cards/${this.deckid}`);
-      const today = new Date().setHours(0, 0, 0, 0);
+      const today = new Date();
       this.cards = res.data.filter(card => new Date(card.next_review) <= today);
       this.cards.forEach(card => card.updated = false);
       this.fetchOk = true;
